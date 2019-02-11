@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/Jasonjiang27.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/Jasonjiang27.github.io/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/Jasonjiang27.github.io/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/Jasonjiang27.github.io/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/Jasonjiang27.github.io/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/Jasonjiang27.github.io/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/Jasonjiang27.github.io/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近由于公司项目需要，要实现wx群聊等爬虫功能，故研究了一下python的第三方包itchat和wxpy。发现了很多有趣的功能，由于他们都已封装较好，使用很方便，很少的代码量就可以实现功能。 我主要研究了下如何获取群聊内容，并链接图灵123的API和微软小冰微信公众号实现自动回复。同步群聊内容至其他群。之前也研究过如何获取微信好友的信息，做统计等。事实上，web上的微信内容信息，极本上都可以使用第">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="itchat wxpy的使用总结">
+<meta property="og:url" content="https://Jasonjiang27.github.io/Jasonjiang27.github.io/2019/02/11/itchat-wxpy的使用总结/index.html">
+<meta property="og:site_name" content="江耀祖的blog">
+<meta property="og:description" content="最近由于公司项目需要，要实现wx群聊等爬虫功能，故研究了一下python的第三方包itchat和wxpy。发现了很多有趣的功能，由于他们都已封装较好，使用很方便，很少的代码量就可以实现功能。 我主要研究了下如何获取群聊内容，并链接图灵123的API和微软小冰微信公众号实现自动回复。同步群聊内容至其他群。之前也研究过如何获取微信好友的信息，做统计等。事实上，web上的微信内容信息，极本上都可以使用第">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-02-11T08:38:54.455Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="itchat wxpy的使用总结">
+<meta name="twitter:description" content="最近由于公司项目需要，要实现wx群聊等爬虫功能，故研究了一下python的第三方包itchat和wxpy。发现了很多有趣的功能，由于他们都已封装较好，使用很方便，很少的代码量就可以实现功能。 我主要研究了下如何获取群聊内容，并链接图灵123的API和微软小冰微信公众号实现自动回复。同步群聊内容至其他群。之前也研究过如何获取微信好友的信息，做统计等。事实上，web上的微信内容信息，极本上都可以使用第">
+
+
+
+
+
+
+  <link rel="canonical" href="https://Jasonjiang27.github.io/Jasonjiang27.github.io/2019/02/11/itchat-wxpy的使用总结/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>itchat wxpy的使用总结 | 江耀祖的blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/Jasonjiang27.github.io/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">江耀祖的blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">努力提高自己才是生活的意义</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/Jasonjiang27.github.io/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/Jasonjiang27.github.io/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Jasonjiang27.github.io/Jasonjiang27.github.io/Jasonjiang27.github.io/2019/02/11/itchat-wxpy的使用总结/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jasonjiang">
+      <meta itemprop="description" content="python golang 互联网 随笔 健身 生活">
+      <meta itemprop="image" content="/Jasonjiang27.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江耀祖的blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">itchat wxpy的使用总结
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2019-02-11 15:55:43 / Updated at: 16:38:54" itemprop="dateCreated datePublished" datetime="2019-02-11T15:55:43+08:00">2019-02-11</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近由于公司项目需要，要实现wx群聊等爬虫功能，故研究了一下python的第三方包itchat和wxpy。发现了很多有趣的功能，由于他们都已封装较好，使用很方便，很少的代码量就可以实现功能。</p>
+<p>我主要研究了下如何获取群聊内容，并链接图灵123的API和微软小冰微信公众号实现自动回复。同步群聊内容至其他群。之前也研究过如何获取微信好友的信息，做统计等。事实上，web上的微信内容信息，极本上都可以使用第三方包获取，也就是有些只在移动端上显示的微信消息，才无法通过该方法获取信息。</p>
+<p>话不多说直接上代码吧，talk is cheap, show me the code!</p>
+<ol>
+<li><p>获取好友信息</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"># !/usr/bin/env python3</span><br><span class="line"># -*- coding:utf-8 -*-</span><br><span class="line"></span><br><span class="line">import re</span><br><span class="line">import itchat</span><br><span class="line">from pyecharts import Page, Pie, Map, Bar</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 实现获取朋友指定信息的方法</span><br><span class="line">def get_key_info(friends_info, key):</span><br><span class="line">    return list(map(lambda friend_info: friend_info.get(key), friends_info))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 获取朋友的相关信息，生成一个 &#123;key:[value1,value2,...],&#125; 类型的字典，最后返回该字典</span><br><span class="line">def get_friends_info(friends):</span><br><span class="line">    friends_info = dict(</span><br><span class="line">        sex=get_key_info(friends, &apos;Sex&apos;),              # 性别</span><br><span class="line">        province=get_key_info(friends, &apos;Province&apos;),    # 省份</span><br><span class="line">        city=get_key_info(friends, &apos;City&apos;)             # 城市</span><br><span class="line">    )</span><br><span class="line">    return friends_info</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 处理数据</span><br><span class="line">def count_nums(new_list):</span><br><span class="line">    new_dict = &#123;&#125;</span><br><span class="line">    for i in new_list:</span><br><span class="line">        if bool(re.search(&apos;[a-z]|[A-Z]&apos;, i)):   # 如果带英文字母（要么是国外，要么是乱写的）就跳出本次循环</span><br><span class="line">            continue</span><br><span class="line">        elif not new_dict.__contains__(i):</span><br><span class="line">            new_dict[i] = 1</span><br><span class="line">        else:</span><br><span class="line">            new_dict[i] += 1</span><br><span class="line">    new_dict.pop(&apos;&apos;)   # 去掉空的键</span><br><span class="line">    return new_dict</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 画出男女性别比例折线图、朋友省级分布图、城市Top10图</span><br><span class="line">def analysis(friends):</span><br><span class="line">    friends_info = get_friends_info(friends)</span><br><span class="line"></span><br><span class="line">    # 男女性别比例</span><br><span class="line">    sex_list = friends_info[&apos;sex&apos;]</span><br><span class="line">    from collections import Counter</span><br><span class="line">    sex_dict = dict(Counter(sex_list))</span><br><span class="line">    attr = [&quot;未知&quot;, &quot;男性&quot;, &quot;女性&quot;]</span><br><span class="line">    value = [sex_dict[0], sex_dict[1], sex_dict[2]]</span><br><span class="line">    page = Page()</span><br><span class="line">    chart1 = Pie(&quot;微信好友性别比例图&quot;,title_pos=&apos;center&apos;)</span><br><span class="line">    chart1.add(&quot;&quot;, attr, value, is_label_show=True, legend_orient=&quot;vertical&quot;, legend_pos=&quot;left&quot;)</span><br><span class="line">    page.add(chart1)</span><br><span class="line"></span><br><span class="line">    # 中国省级分析</span><br><span class="line">    province_list = friends_info[&apos;province&apos;]</span><br><span class="line">    province_dict = count_nums(province_list)</span><br><span class="line">    attr, value = list(province_dict.keys()), list(province_dict.values())</span><br><span class="line">    # 中国省级分析画图</span><br><span class="line">    chart2 = Map(&apos;好友省级分布(中国地图)&apos;, width=1200, height=600)</span><br><span class="line">    chart2.add(&apos;&apos;, attr, value, maptype=&apos;china&apos;, is_label_show=True, is_visualmap=True, visual_text_color=&apos;#000&apos;)</span><br><span class="line">    page.add(chart2)</span><br><span class="line"></span><br><span class="line">    # 中国城市分析(取前10个人数最多的城市)</span><br><span class="line">    city_list = friends_info[&apos;city&apos;]</span><br><span class="line">    city_dict = count_nums(city_list)</span><br><span class="line">    top_ten_city = dict(sorted(city_dict.items(), key=lambda x: x[1], reverse=True)[0:10])</span><br><span class="line">    attr, value = list(top_ten_city.keys()), list(top_ten_city.values())</span><br><span class="line">    # 中国城市分析画图</span><br><span class="line">    chart3 = Bar(&apos;好友城市分布Top10柱状图&apos;, width=900, height=500)</span><br><span class="line">    chart3.add(&apos;&apos;, attr, value, is_stack=False,is_label_show=True,bar_category_gap=&apos;20%&apos;)</span><br><span class="line">    page.add(chart3)</span><br><span class="line"></span><br><span class="line">    page.render(&apos;analysisResult.html&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    itchat.auto_login(hotReload=True)</span><br><span class="line">    friends = itchat.get_friends(update=True)</span><br><span class="line"></span><br><span class="line">    analysis(friends)</span><br><span class="line"></span><br><span class="line">    #itchat.logout()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>好友头像拼接</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"># !/usr/bin/env python3</span><br><span class="line"># -*- coding:utf-8 -*-</span><br><span class="line"></span><br><span class="line">import os, random, math</span><br><span class="line">import itchat</span><br><span class="line">from PIL import Image</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 实现获取朋友指定信息的方法</span><br><span class="line">def get_key_info(friends_info, key):</span><br><span class="line">    return list(map(lambda friend_info: friend_info.get(key), friends_info))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 获取朋友的相关信息，生成一个 &#123;key:[value1,value2,...],&#125; 类型的字典，最后返回该字典</span><br><span class="line">def get_friends_info(friends):</span><br><span class="line">    friends_info = dict(</span><br><span class="line">        username=get_key_info(friends, &apos;UserName&apos;),    # 用户名</span><br><span class="line">    )</span><br><span class="line">    return friends_info</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 保存微信好友的头像到本地</span><br><span class="line">def get_head_img(friends):</span><br><span class="line">    friends_info = get_friends_info(friends)</span><br><span class="line">    username = friends_info[&apos;username&apos;]</span><br><span class="line"></span><br><span class="line">    for i, uname in enumerate(username):</span><br><span class="line">        with open(&quot;headImgs/&quot; + str(i) + &quot;.png&quot;, &quot;wb&quot;) as f:</span><br><span class="line">            img = itchat.get_head_img(uname)   # itchat.get_head_img() 获取到头像二进制，并写入文件，保存每张头像；因为用户名是唯一的，所以根据uname获取头像</span><br><span class="line">            f.write(img)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 使用微信好友头像，根据输入的像素值大小，生成一张图片</span><br><span class="line">def create_img():</span><br><span class="line">    x = 0</span><br><span class="line">    y = 0</span><br><span class="line">    imgs = os.listdir(&quot;headImgs&quot;)  # 返回 headImgs 目录下的文件列表</span><br><span class="line">    random.shuffle(imgs)  # 将文件列表随机排序</span><br><span class="line"></span><br><span class="line">    input_length = int(input(&quot;请输入手机屏保长的像素值(一般是两个值中较大的值):&quot;))</span><br><span class="line">    input_width = int(input(&quot;请输入手机屏保宽的像素值(一般是两个值中较小的值):&quot;))</span><br><span class="line"></span><br><span class="line">    new_img = Image.new(&apos;RGBA&apos;, (input_width, input_length))   # 创建 长*宽 的图片用于填充各小图片</span><br><span class="line">    width = int(math.sqrt(input_length * input_width / len(imgs)))   # 以 长*宽 来拼接图片，math.sqrt()开平方根计算每张小图片的宽高，这里设定每一张小图片还是正方形，虽然存在一点偏差，头像数量越多，壁纸右边和下边的空白越少</span><br><span class="line">    num_line = int(input_width / width)   # 每行图片数</span><br><span class="line"></span><br><span class="line">    for i in imgs:  #对每一张图片逐个进行处理</span><br><span class="line">        try:</span><br><span class="line">            img = Image.open(&quot;headImgs/&quot; + i)</span><br><span class="line">        except IOError:</span><br><span class="line">            print(&quot;第&#123;&#125;张图片为空&quot;.format(i))  #可能会出现某张图片为空的情况</span><br><span class="line">        else:</span><br><span class="line">            img = img.resize((width, width), Image.ANTIALIAS)   # 缩小图片</span><br><span class="line">            new_img.paste(img, (x * width, y * width))   # 拼接图片，一行排满，换行拼接</span><br><span class="line">            x += 1</span><br><span class="line">            if x &gt;= num_line:</span><br><span class="line">                x = 0</span><br><span class="line">                y += 1</span><br><span class="line"></span><br><span class="line">    new_img.save(&quot;mixedImg.png&quot;)</span><br><span class="line">    itchat.send_image(&apos;mixedImg.png&apos;, toUserName=&apos;filehelper&apos;)   #通过文件传输助手发送到自己微信中</span><br><span class="line">    #newImg.show()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    itchat.auto_login(hotReload=True)</span><br><span class="line">    friends = itchat.get_friends(update=True)</span><br><span class="line"></span><br><span class="line">    get_head_img(friends)</span><br><span class="line">    create_img()</span><br><span class="line"></span><br><span class="line">    #itchat.logout()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>未完。。。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/Jasonjiang27.github.io/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Jasonjiang27.github.io/2019/01/12/参加上海交大人工智能校友会有感/" rel="next" title="参加上海交大人工智能校友会有感">
+                <i class="fa fa-chevron-left"></i> 参加上海交大人工智能校友会有感
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Jasonjiang</p>
+              <p class="site-description motion-element" itemprop="description">python golang 互联网 随笔 健身 生活</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/Jasonjiang27.github.io/archives/">
+                
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/Jasonjiang27.github.io/categories/index.html">
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/Jasonjiang27.github.io/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jasonjiang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/Jasonjiang27.github.io/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/Jasonjiang27.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/Jasonjiang27.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/Jasonjiang27.github.io/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/Jasonjiang27.github.io/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script src="/Jasonjiang27.github.io/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/Jasonjiang27.github.io/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/Jasonjiang27.github.io/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
