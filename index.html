@@ -231,7 +231,7 @@
 
     
 
-    <a href="/Jasonjiang27.github.io/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+    <a href="/Jasonjiang27.github.io/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
 
   </li>
         
@@ -248,7 +248,7 @@
 
     
 
-    <a href="/Jasonjiang27.github.io/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+    <a href="/Jasonjiang27.github.io/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
 
   </li>
 
@@ -284,6 +284,221 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Jasonjiang27.github.io/Jasonjiang27.github.io/Jasonjiang27.github.io/2019/02/22/NLP自然语言处理学习总结/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jasonjiang">
+      <meta itemprop="description" content="python golang 互联网 随笔 健身 生活">
+      <meta itemprop="image" content="/Jasonjiang27.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江耀祖的blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/Jasonjiang27.github.io/2019/02/22/NLP自然语言处理学习总结/" class="post-title-link" itemprop="url">NLP自然语言处理学习总结</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-22 22:28:48" itemprop="dateCreated datePublished" datetime="2019-02-22T22:28:48+08:00">2019-02-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-23 23:35:09" itemprop="dateModified" datetime="2019-02-23T23:35:09+08:00">2019-02-23</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>自然语言处理也是目前在人工只能领域 非常获得一个方向，包括智能对话、翻译、语音识别等方向，也是目前人工智能我认为最早能够落地的方向之一吧。</p>
+<p>总结一下，大概在如下领域：</p>
+<ul>
+<li>信息检索：对大规模文档进行索引。</li>
+<li>语音识别：识别包含口语在内的自然语言的声学信号转换成符合预期的信号。</li>
+<li>机器翻译：将一种语言翻译成另外一种语言。</li>
+<li>智能问答：自动回答问题。</li>
+<li>对话系统：通过多回合对话，跟用户进行聊天、回答、完成某项任务。</li>
+<li>文本分类：将文本自动归类。</li>
+<li>情感分析：判断某段文本的情感倾向</li>
+<li>文本生成：根据需求自动生成文本</li>
+<li>自动文摘：归纳，总结文本的摘要。</li>
+</ul>
+<p>中文分词主要有三种方法：</p>
+<ul>
+<li><p>正向最大匹配法</p>
+<p>  正向最大匹配法（Maximum Match Method，MM 法）是指从左向右按最大原则与词典里面的词进行匹配。假设词典中最长词是  mm  个字，那么从待切分文本的最左边取  mm  个字符与词典进行匹配，如果匹配成功，则分词。如果匹配不成功，那么取  m−1m−1  个字符与词典匹配，一直取直到成功匹配为止。<br>  例如：句子： 中华民族从此站起来了<br>词典：”中华”，”民族”，”从此”，”站起来了”<br>使用 MM 法分词：</p>
+<ul>
+<li>第一步：词典中最长是 4 个字，所以我们将 “中华民族” 取出来与词典进 行匹配，匹配失败。</li>
+<li>第二步：于是，去掉 “族”，以 “中华民” 进行匹配，匹配失败</li>
+<li>第三步：去掉 “中华民” 中的 “民”，以 “中华” 进行匹配，匹配成功。</li>
+<li>第四步：在带切分句子中去掉匹配成功的词，待切分句子变成 “民族从此站起来了”。</li>
+<li>第五步：重复上面的第 1 - 4 步骤</li>
+<li>第六步：若最后一个词语匹配成功，结束。</li>
+<li>最终句子被分成：“中华 / 民族 / 从此 / 站起来了 ”</li>
+</ul>
+</li>
+<li><p>逆向最大匹配法</p>
+<p>  逆向最大匹配法（ Reverse Maximum Match Method, RMM 法）的原理与正向法基本相同，唯一不同的就是切分的方向与 MM 法相反。逆向法从文本末端开始匹配，每次用末端的最长词长度个字符进行匹配。</p>
+<p>  因为基本原理与 MM 法一样，反向来进行匹配就行。所以这里对算法不再赘述。</p>
+<p>  另外，由于汉语言结构的问题，里面有许多偏正短语，即结构是：</p>
+<p>  定语 + 中心词（名、代）：（祖国）大地、（一朵）茶花、（前进）的步伐。<br>  状语 + 中心词（动、形）：（很）好看、（独立）思考、（慢慢）地走。<br>  因此，如果采用逆向匹配法，可以适当提高一些精确度。换句话说，使用逆向匹配法要比正向匹配法的误差要小。至于其中的原由，我们不细讲，只做了解即可。</p>
+</li>
+<li><p>双向匹配法</p>
+<p>  双向最大匹配法（Bi-direction Matching Method ，BMM）则是将正向匹配法得到的分词结果与逆向匹配法得到的分词结果进行比较，然后按照最大匹配原则，选取次数切分最少的作为结果。</p>
+</li>
+</ul>
+<p>正向最大匹配法，python代码实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">text = &apos;我们是共产主义的接班人&apos;</span><br><span class="line">dic = (&apos;我们&apos;, &apos;是&apos;, &apos;共产主义&apos;, &apos;的&apos;, &apos;接班&apos;, &apos;人&apos;, &apos;你&apos;, &apos;我&apos;, &apos;社会&apos;, &apos;主义&apos;)</span><br><span class="line">words = []</span><br><span class="line">max_len_word = 0</span><br><span class="line"></span><br><span class="line">for key in dic:</span><br><span class="line">    # 若当前词长度大于max_len_word，则将len(key)值赋值给max_len_word</span><br><span class="line">    if len(key) &gt; max_len_word:</span><br><span class="line">        max_len_word = len(key)</span><br><span class="line">print(max_len_word)</span><br><span class="line"></span><br><span class="line"># 判断text的长度是否大于0，如果大于0则进行下面的循环</span><br><span class="line">while len(text) &gt; 0:</span><br><span class="line"></span><br><span class="line">    # 初始化想要取的字符串长度</span><br><span class="line">    # 按照最长词长度初始化</span><br><span class="line">    word_len = max_len_word</span><br><span class="line"></span><br><span class="line">    # 对每个字符串可能会有(max_len_word)次循环</span><br><span class="line">    for i in range(0, max_len_word):</span><br><span class="line"></span><br><span class="line">        # 令word 等于text的前word_len个字符</span><br><span class="line">        word = text[0:word_len]</span><br><span class="line"></span><br><span class="line">        # 为了便于观察过程，我们打印一下当前分割结果</span><br><span class="line">        print(&apos;用&apos;, word, &apos;进行匹配&apos;)</span><br><span class="line"></span><br><span class="line">        # 判断word是否在词典dic当中</span><br><span class="line"></span><br><span class="line">        # 如果不在词典当中</span><br><span class="line">        if word not in dic:</span><br><span class="line"></span><br><span class="line">            #则以word_len - 1</span><br><span class="line">            word_len -= 1</span><br><span class="line"></span><br><span class="line">            # 清空word</span><br><span class="line">            word = []</span><br><span class="line">        # 如果word 在词典当中</span><br><span class="line">        else:</span><br><span class="line"></span><br><span class="line">            # 更新text串起始位置</span><br><span class="line">            text = text[word_len:]</span><br><span class="line"></span><br><span class="line">            # 为了方便观察过程，我们打印一下当前结果</span><br><span class="line">            print(&apos;&#123;&#125;   匹配成功，添加进words当中&apos;.format(word))</span><br><span class="line"></span><br><span class="line">            # 把匹配成功的word添加进上面创建好的words当中</span><br><span class="line">            words.append(word)</span><br><span class="line"></span><br><span class="line">            # 清空word</span><br><span class="line">            word = []</span><br><span class="line">print(words)</span><br></pre></td></tr></table></figure>
+<p>隐马可夫模型</p>
+<p>HMM 应用于分词<br>首先，规定每个字在一个词语当中有着4个不同的位置，词首 B，词中 M，词尾 E，单字成词 S。我们通过给一句话中的每个字标记上述的属性，最后通过标注来确定分词结果。</p>
+<p>例如：我今天要去实验室</p>
+<p>标注后得到：我/S 今/B 天/E 要/S 去/S 实/B 验/M 室/E</p>
+<p>标注序列是：S  B  E  S  S  B  M  E</p>
+<p>找到 S 、B 、 E 进行切词：S / B E / S / S / B M E /</p>
+<p>所以得到的切词结果是：我 / 今天 / 要 / 去 / 实验室</p>
+<p>这就是一个 HMM 模型，因为我们要得到每个字的标注信息，但是我们只能看到的是每一个汉字，需要我们通过这些汉字来推断每个字在词中的位置，并且每个字的标注状态还与他前一个字的标注状态有关。</p>
+<p>jieba分词</p>
+<p>jieba 工具用的 HMM算 法与数据结构算法结合使用的方法，比直接单独使用 HMM 来分词效率高很多，准确率也高很多。</p>
+<p>词袋模型和 TF-IDF 模型。这两种模型都可以为我们提取到文本的特征，并将提取的特征用于后续的任务。因此，是文本分类任务当中非常重要的一个环节。</p>
+<h3 id="文本分类"><a href="#文本分类" class="headerlink" title="文本分类"></a>文本分类</h3><p>文本分类技术在自然语言处理领域当中，有着十分重要的地位。一般而言，文本分类是指在一定的规则下，根据内容自动确定文本类别这一过程。文本分类在实际场景中有诸多方面的应用，比如常见的有垃圾邮件分类，情感分析等，新闻分类等等。</p>
+<p>按照分类要求的不同，文本分类主要可以分为二分类，多分类，多标签分类三大类。</p>
+<ul>
+<li>二分类问题：也是最基础的分类，顾名思义是将文本归为两种类别，比如将正常邮件邮件划分问题，垃圾邮件或者正常邮件。一段影评，判断是好评还是差评的问题。</li>
+<li>多分类问题：是将文本划分为多个类别，比如将新闻归为政治类，娱乐类，生活类等等。</li>
+<li>多标签分类：是给文本贴上多个不同的标签，比如一部小说可以同时被划分为多个主题，可能既是修仙小说，又是玄幻小说。</li>
+</ul>
+<p><strong>两种方法</strong></p>
+<ul>
+<li>传统方法：特征提取（也可以叫做特征工程）+ 分类器。就是将文本转换成固定维度的向量，然后送到分类器中进行分类。</li>
+<li>深度学习方法：可以自动提取特征，实现端到端的训练，有较强的特征表征能力，所以深度学习进行文本分类的效果往往要好于传统的方法。</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -338,14 +553,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Post created: 2019-02-11 15:55:43 / Updated at: 17:25:57" itemprop="dateCreated datePublished" datetime="2019-02-11T15:55:43+08:00">2019-02-11</time>
+              <time title="Created: 2019-02-11 15:55:43 / Modified: 17:25:57" itemprop="dateCreated datePublished" datetime="2019-02-11T15:55:43+08:00">2019-02-11</time>
             
 
             
@@ -498,14 +713,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Post created: 2019-01-12 20:42:00 / Updated at: 22:15:32" itemprop="dateCreated datePublished" datetime="2019-01-12T20:42:00+08:00">2019-01-12</time>
+              <time title="Created: 2019-01-12 20:42:00 / Modified: 22:15:32" itemprop="dateCreated datePublished" datetime="2019-01-12T20:42:00+08:00">2019-01-12</time>
             
 
             
@@ -652,14 +867,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Post created: 2019-01-01 15:46:56" itemprop="dateCreated datePublished" datetime="2019-01-01T15:46:56+08:00">2019-01-01</time>
+              <time title="Created: 2019-01-01 15:46:56" itemprop="dateCreated datePublished" datetime="2019-01-01T15:46:56+08:00">2019-01-01</time>
             
 
             
@@ -676,7 +891,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Updated at: 2019-02-11 16:38:58" itemprop="dateModified" datetime="2019-02-11T16:38:58+08:00">2019-02-11</time>
+                <time title="Modified: 2019-02-11 16:38:58" itemprop="dateModified" datetime="2019-02-11T16:38:58+08:00">2019-02-11</time>
               
             
           </span>
@@ -890,14 +1105,14 @@ v2 := router.Group(&quot;/v2&quot;)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Post created: 2018-12-16 22:00:22" itemprop="dateCreated datePublished" datetime="2018-12-16T22:00:22+08:00">2018-12-16</time>
+              <time title="Created: 2018-12-16 22:00:22" itemprop="dateCreated datePublished" datetime="2018-12-16T22:00:22+08:00">2018-12-16</time>
             
 
             
@@ -914,7 +1129,7 @@ v2 := router.Group(&quot;/v2&quot;)
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Updated at: 2019-01-01 11:18:21" itemprop="dateModified" datetime="2019-01-01T11:18:21+08:00">2019-01-01</time>
+                <time title="Modified: 2019-01-01 11:18:21" itemprop="dateModified" datetime="2019-01-01T11:18:21+08:00">2019-01-01</time>
               
             
           </span>
@@ -1067,14 +1282,14 @@ v2 := router.Group(&quot;/v2&quot;)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Post created: 2018-12-08 11:56:24 / Updated at: 12:48:04" itemprop="dateCreated datePublished" datetime="2018-12-08T11:56:24+08:00">2018-12-08</time>
+              <time title="Created: 2018-12-08 11:56:24 / Modified: 12:48:04" itemprop="dateCreated datePublished" datetime="2018-12-08T11:56:24+08:00">2018-12-08</time>
             
 
             
@@ -1093,7 +1308,7 @@ v2 := router.Group(&quot;/v2&quot;)
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/Jasonjiang27.github.io/categories/cate/" itemprop="url" rel="index"><span itemprop="name">cate</span></a></span>
@@ -1240,14 +1455,14 @@ v2 := router.Group(&quot;/v2&quot;)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Post created: 2018-11-13 21:48:24" itemprop="dateCreated datePublished" datetime="2018-11-13T21:48:24+08:00">2018-11-13</time>
+              <time title="Created: 2018-11-13 21:48:24" itemprop="dateCreated datePublished" datetime="2018-11-13T21:48:24+08:00">2018-11-13</time>
             
 
             
@@ -1264,7 +1479,7 @@ v2 := router.Group(&quot;/v2&quot;)
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Updated at: 2018-12-08 12:51:51" itemprop="dateModified" datetime="2018-12-08T12:51:51+08:00">2018-12-08</time>
+                <time title="Modified: 2018-12-08 12:51:51" itemprop="dateModified" datetime="2018-12-08T12:51:51+08:00">2018-12-08</time>
               
             
           </span>
@@ -1278,7 +1493,7 @@ v2 := router.Group(&quot;/v2&quot;)
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/Jasonjiang27.github.io/categories/cate/" itemprop="url" rel="index"><span itemprop="name">cate</span></a></span>
@@ -1472,14 +1687,14 @@ v2 := router.Group(&quot;/v2&quot;)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Post created: 2018-11-12 23:53:23" itemprop="dateCreated datePublished" datetime="2018-11-12T23:53:23+08:00">2018-11-12</time>
+              <time title="Created: 2018-11-12 23:53:23" itemprop="dateCreated datePublished" datetime="2018-11-12T23:53:23+08:00">2018-11-12</time>
             
 
             
@@ -1496,7 +1711,7 @@ v2 := router.Group(&quot;/v2&quot;)
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Updated at: 2018-11-13 21:55:57" itemprop="dateModified" datetime="2018-11-13T21:55:57+08:00">2018-11-13</time>
+                <time title="Modified: 2018-11-13 21:55:57" itemprop="dateModified" datetime="2018-11-13T21:55:57+08:00">2018-11-13</time>
               
             
           </span>
@@ -1627,14 +1842,14 @@ v2 := router.Group(&quot;/v2&quot;)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="Post created: 2018-11-12 22:52:20" itemprop="dateCreated datePublished" datetime="2018-11-12T22:52:20+08:00">2018-11-12</time>
+              <time title="Created: 2018-11-12 22:52:20" itemprop="dateCreated datePublished" datetime="2018-11-12T22:52:20+08:00">2018-11-12</time>
             
 
             
@@ -1763,8 +1978,8 @@ v2 := router.Group(&quot;/v2&quot;)
                 
                   <a href="/Jasonjiang27.github.io/archives/">
                 
-                    <span class="site-state-item-count">8</span>
-                    <span class="site-state-item-name">Artikel</span>
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -1779,7 +1994,7 @@ v2 := router.Group(&quot;/v2&quot;)
                       
                     
                     <span class="site-state-item-count">1</span>
-                    <span class="site-state-item-name">Kategorien</span>
+                    <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
               
@@ -1799,8 +2014,10 @@ v2 := router.Group(&quot;/v2&quot;)
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
-                    <span class="site-state-item-name">Tags</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
               
@@ -1850,7 +2067,7 @@ v2 := router.Group(&quot;/v2&quot;)
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
 
 
 
