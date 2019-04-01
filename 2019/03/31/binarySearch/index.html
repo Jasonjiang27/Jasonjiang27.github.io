@@ -105,15 +105,16 @@
 
 
   <meta name="description" content="实现二分查找二分查找是在排好序的数组中查找指定数字，给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。 示例 1: 输入: nums = [-1,0,3,5,9,12], target = 9 输出: 4 解释: 9 出现在 nums 中并且下标为 4 java 代码实现 pu">
+<meta name="keywords" content="leetcode算法练习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="江耀祖的blog">
-<meta property="og:url" content="https://Jasonjiang27.github.io/Jasonjiang27.github.io/2019/04/01/binarySearch/index.html">
+<meta property="og:title" content="二分查找">
+<meta property="og:url" content="https://Jasonjiang27.github.io/Jasonjiang27.github.io/2019/03/31/binarySearch/index.html">
 <meta property="og:site_name" content="江耀祖的blog">
 <meta property="og:description" content="实现二分查找二分查找是在排好序的数组中查找指定数字，给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。 示例 1: 输入: nums = [-1,0,3,5,9,12], target = 9 输出: 4 解释: 9 出现在 nums 中并且下标为 4 java 代码实现 pu">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-01T13:49:13.234Z">
+<meta property="og:updated_time" content="2019-04-01T13:53:23.074Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="江耀祖的blog">
+<meta name="twitter:title" content="二分查找">
 <meta name="twitter:description" content="实现二分查找二分查找是在排好序的数组中查找指定数字，给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。 示例 1: 输入: nums = [-1,0,3,5,9,12], target = 9 输出: 4 解释: 9 出现在 nums 中并且下标为 4 java 代码实现 pu">
 
 
@@ -121,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="https://Jasonjiang27.github.io/Jasonjiang27.github.io/2019/04/01/binarySearch/">
+  <link rel="canonical" href="https://Jasonjiang27.github.io/Jasonjiang27.github.io/2019/03/31/binarySearch/">
 
 
 
@@ -131,7 +132,7 @@
   };
 </script>
 
-  <title> | 江耀祖的blog</title>
+  <title>二分查找 | 江耀祖的blog</title>
   
 
 
@@ -300,7 +301,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://Jasonjiang27.github.io/Jasonjiang27.github.io/Jasonjiang27.github.io/2019/04/01/binarySearch/">
+    <link itemprop="mainEntityOfPage" href="https://Jasonjiang27.github.io/Jasonjiang27.github.io/Jasonjiang27.github.io/2019/03/31/binarySearch/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Jasonjiang">
@@ -317,7 +318,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h1 class="post-title" itemprop="name headline">二分查找
 
               
             
@@ -343,16 +344,46 @@
                 
               
 
-              <time title="Post created: 2019-04-01 21:45:05 / Updated at: 21:49:13" itemprop="dateCreated datePublished" datetime="2019-04-01T21:45:05+08:00">2019-04-01</time>
+              <time title="Post created: 2019-03-31 11:56:24" itemprop="dateCreated datePublished" datetime="2019-03-31T11:56:24+08:00">2019-03-31</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2019-04-01 21:53:23" itemprop="dateModified" datetime="2019-04-01T21:53:23+08:00">2019-04-01</time>
               
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/Jasonjiang27.github.io/categories/cate/" itemprop="url" rel="index"><span itemprop="name">cate</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -423,6 +454,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/Jasonjiang27.github.io/tags/leetcode算法练习/" rel="tag"># leetcode算法练习</a>
+          
+        </div>
+      
 
       
       
@@ -442,8 +479,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/Jasonjiang27.github.io/2019/04/01/最长回文子串/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
+              <a href="/Jasonjiang27.github.io/2019/04/01/最长回文子串/" rel="prev" title="最长回文子串">
+                最长回文子串 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -552,7 +589,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">Tags</span>
                   </a>
                 </div>
