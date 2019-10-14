@@ -300,6 +300,244 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Jasonjiang27.github.io/Jasonjiang27.github.io/Jasonjiang27.github.io/2019/01/01/golang及web框架gin项目总结/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jasonjiang">
+      <meta itemprop="description" content="python golang 互联网 随笔 健身 生活">
+      <meta itemprop="image" content="/Jasonjiang27.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江耀祖的blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/Jasonjiang27.github.io/2019/01/01/golang及web框架gin项目总结/" class="post-title-link" itemprop="url">golang及web框架gin项目总结</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2019-01-01 15:46:56" itemprop="dateCreated datePublished" datetime="2019-01-01T15:46:56+08:00">2019-01-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2019-02-11 16:38:58" itemprop="dateModified" datetime="2019-02-11T16:38:58+08:00">2019-02-11</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="项目总结——后端项目总结（tea管理平台）"><a href="#项目总结——后端项目总结（tea管理平台）" class="headerlink" title="项目总结——后端项目总结（tea管理平台）"></a>项目总结——后端项目总结（tea管理平台）</h2><p>近期接手了一个公司项目，使用golang语言作为后端语言，搭建一个文本管理平台，之前没有接触过golang，其实只会python，这正好给我学习一门和语言的机会，于是我从基础语法学起，慢慢算是开始熟悉了golang语言。由于golang和python很不一样，它是强类型的静态语言，对于数据类型和结构需要声明，使用也有一些不同，我也是遇到很多坑，所以今天来总结一下，也算是为以后面试或者重新使用这门语言能迅速想起来。</p>
+<ol>
+<li><p>GOPATH设置</p>
+<p> GOPATH是go语言必须设置的，这和其他语言可能不太一样，可以使用go env查看当前GOPATH，可以在终端命令行类似使用export GOPATH=/home/mas/go 设置，</p>
+</li>
+<li><p>go切片</p>
+<p> 一开始我误以为golang中切片与python中的列表差不多，其实差的很多，虽然都是中括号中的数组，python中是 以英文逗号隔开的，go中是空格，go中的切片需要声明长度，并且需要一个一个往里面填值，而不能还第0个值没有的情况下，就直接给第2个值赋值，这样会报错，这就跟python很大不同。</p>
+</li>
+<li><p>go中各种类型转化</p>
+<ul>
+<li>字符串，整型，浮点型转换，可以直接使用int(),float64()，但是转为字符串不能直接使用string()，特别是数字，转为字符串会得到ascii码，比如string(64)等到的可能就是ascii码中的大写字母C，那么怎么获得字符串”64呢？可以使用strconv包，strconv.Atoi字符串转int，strconv.Itoa 将整型转string。</li>
+<li><p>struct，map，json字符串互相转换，这个是我做项目遇到最多的情况，很多时候声明数据结构需要使用struct，但是需要的结果又是其他类型，比如map类型或者字符串，就需要做转换，struct转map，可以使用json.Mashal先转为json格式字符串，再解析成map</p>
+<p>  `type Person struct {</p>
+<pre><code>Name        string     `json:&quot;-&quot;` 
+Age         int64      `json:&quot;-&quot;`
+Birth       time.Time  `json:&quot;-&quot;`
+Children    []string   `json:&quot;-&quot;`
+</code></pre><p>  }</p>
+<p>  jsonBytes, _ := json.Marshal(person)</p>
+<p>  fmt.Println(string(jsonBytes))`</p>
+</li>
+</ul>
+</li>
+<li><p>golang中interface{}和struct的使用</p>
+</li>
+<li><p>golang判断map的key存在<br> if _, ok := map[key]; ok {<br> //存在<br> }</p>
+</li>
+</ol>
+<h3 id="Gin框架总结"><a href="#Gin框架总结" class="headerlink" title="Gin框架总结"></a>Gin框架总结</h3><ol>
+<li><p>安装</p>
+<pre><code>go get -u github.com/gin-gonic/gin
+</code></pre></li>
+<li><p>API示例（括号里为路由和函数方法）</p>
+<pre><code>router.GET(&quot;/someGet&quot;, getting)
+router.POST(&quot;/somePost&quot;, posting)
+</code></pre></li>
+<li>path中参数解析<br> c.Param(“”)获取”/user/:name”</li>
+<li><p>查询字符串参数<br> 响应类似请求  /welcome?firstname=Jane&amp;lastname=Doe<br> c.Query(“lastname”)</p>
+</li>
+<li><p>POST请求<br> 提交表单数据：</p>
+<pre><code>router.POST(&quot;/form_post&quot;, func(c *gin.Context) {
+message := c.PostForm(&quot;message&quot;)
+nick := c.DefaultPostForm(&quot;nick&quot;, &quot;anonymous&quot;)
+</code></pre><p> 提交字符串参数</p>
+<pre><code>id := c.Query(&quot;id&quot;)
+page := c.DefaultQuery(&quot;page&quot;, &quot;0&quot;)
+name := c.PostForm(&quot;name&quot;)
+message := c.PostForm(&quot;message&quot;)
+</code></pre><p> 上传文件：</p>
+<pre><code> router.POST(&quot;/upload&quot;, func(c *gin.Context) {
+// 单文件
+file, _ := c.FormFile(&quot;file&quot;)
+log.Println(file.Filename)
+router.POST(&quot;/upload&quot;, func(c *gin.Context) {
+// Multipart form 多文件
+form, _ := c.MultipartForm()
+files := form.File[&quot;upload[]&quot;]
+</code></pre></li>
+<li><p>路由群组</p>
+<pre><code> // 简单组： v1
+v1 := router.Group(&quot;/v1&quot;)
+{
+    v1.POST(&quot;/login&quot;, loginEndpoint)
+    v1.POST(&quot;/submit&quot;, submitEndpoint)
+    v1.POST(&quot;/read&quot;, readEndpoint)
+}
+
+// 简单组： v2
+v2 := router.Group(&quot;/v2&quot;)
+{
+    v2.POST(&quot;/login&quot;, loginEndpoint)
+    v2.POST(&quot;/submit&quot;, submitEndpoint)
+    v2.POST(&quot;/read&quot;, readEndpoint)
+}
+</code></pre></li>
+<li><p>gin.New()和gin.Default()区别</p>
+<p> gin.New()默认的没有中间件的空白 Gin</p>
+<p> r := gin.Default()// Default 已经连接了 Logger 和 Recovery 中间件</p>
+</li>
+<li><p>HTML渲染</p>
+<pre><code>c.HTML(http.StatusOK, &quot;index.html&quot;, gin.H{
+    &quot;title&quot;: &quot;Main website&quot;,
+})
+</code></pre></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://Jasonjiang27.github.io/Jasonjiang27.github.io/Jasonjiang27.github.io/2018/12/16/总结一下自己游泳的心得/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1215,7 +1453,7 @@
                 
                   <a href="/Jasonjiang27.github.io/archives/">
                 
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">Artikel</span>
                   </a>
                 </div>
