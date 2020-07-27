@@ -24,17 +24,23 @@
             height: 300px; */
 
         }
-        
+        h1 {
+            font-size: 250%;
+            font-weight: 400;
+            color:crimson;
+        }
+
         h2 {
             font-size: 250%;
             font-weight: 400;
+            color:darkred;
         }
         
         .content {
             position: absolute;
             width: 100%;
             top: 40%;
-            left: 300px;
+            left: 100px;
             transform: translate(0, -50%);
             text-align: justify;
         }
@@ -53,8 +59,8 @@
 
 <body>
     <div class="content">
-        <h2>亲爱的菁媛，我们在一起了226天</h2>
-        <h2>亲我们已经分手了</h2>
+        <h1>我们在一起一共226天 ♥</h1>
+        <h2>我们已经分手了  💔</h2>
         <div class="timer">
             <b id="d"></b> Days <b id="h"></b> Hours <b id="m"></b> Minutes <b id="s"></b> Seconds
         </div>
@@ -62,7 +68,7 @@
 
     <script>
         function timer() {
-            var start = new Date(2020, 7, 5); // 2015.7.2
+            var start = new Date(2020, 6, 5); // 2015.7.2
             var t = new Date() - start;
             var h = ~~(t / 1000 / 60 / 60 % 24);
             if (h < 10) {
